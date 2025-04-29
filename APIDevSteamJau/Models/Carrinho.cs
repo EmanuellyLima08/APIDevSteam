@@ -9,5 +9,8 @@
         public bool? Finalizado { get; set; }
         public DateTime? DataFinalizacao { get; set; }
         public decimal ValorTotal { get; set; }
+
+        // Definindo a coleção de itens do carrinho
+        public ICollection<ItemCarrinho> Itens { get; set; }
     }
 }

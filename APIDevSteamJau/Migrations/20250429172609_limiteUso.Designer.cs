@@ -4,6 +4,7 @@ using APIDevSteamJau.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIDevSteamJau.Migrations
 {
     [DbContext(typeof(APIContext))]
-    partial class APIContextModelSnapshot : ModelSnapshot
+    [Migration("20250429172609_limiteUso")]
+    partial class limiteUso
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,7 +87,7 @@ namespace APIDevSteamJau.Migrations
                     b.Property<int>("Desconto")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LimiteUso")
+                    b.Property<int>("LimiteUso")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
@@ -94,35 +97,6 @@ namespace APIDevSteamJau.Migrations
                     b.HasKey("CupomId");
 
                     b.ToTable("Cupons", (string)null);
-                });
-
-            modelBuilder.Entity("APIDevSteamJau.Models.CupomCarrinho", b =>
-                {
-                    b.Property<Guid>("CupomCarrinhoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool?>("Ativo")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("DataCriacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DataValidade")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Desconto")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LimiteUso")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("Nome")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CupomCarrinhoId");
-
-                    b.ToTable("CuponsCarrinhos", (string)null);
                 });
 
             modelBuilder.Entity("APIDevSteamJau.Models.ItemCarrinho", b =>
@@ -438,14 +412,12 @@ namespace APIDevSteamJau.Migrations
             modelBuilder.Entity("APIDevSteamJau.Models.ItemCarrinho", b =>
                 {
                     b.HasOne("APIDevSteamJau.Models.Carrinho", "Carrinho")
-                        .WithMany("Itens")
-                        .HasForeignKey("CarrinhoId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("CarrinhoId");
 
                     b.HasOne("APIDevSteamJau.Models.Jogo", "Jogo")
                         .WithMany()
-                        .HasForeignKey("JogoId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("JogoId");
 
                     b.Navigation("Carrinho");
 
@@ -531,11 +503,6 @@ namespace APIDevSteamJau.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("APIDevSteamJau.Models.Carrinho", b =>
-                {
-                    b.Navigation("Itens");
                 });
 #pragma warning restore 612, 618
         }

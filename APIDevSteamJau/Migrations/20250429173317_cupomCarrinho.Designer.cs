@@ -4,6 +4,7 @@ using APIDevSteamJau.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIDevSteamJau.Migrations
 {
     [DbContext(typeof(APIContext))]
-    partial class APIContextModelSnapshot : ModelSnapshot
+    [Migration("20250429173317_cupomCarrinho")]
+    partial class cupomCarrinho
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -438,14 +441,12 @@ namespace APIDevSteamJau.Migrations
             modelBuilder.Entity("APIDevSteamJau.Models.ItemCarrinho", b =>
                 {
                     b.HasOne("APIDevSteamJau.Models.Carrinho", "Carrinho")
-                        .WithMany("Itens")
-                        .HasForeignKey("CarrinhoId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("CarrinhoId");
 
                     b.HasOne("APIDevSteamJau.Models.Jogo", "Jogo")
                         .WithMany()
-                        .HasForeignKey("JogoId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("JogoId");
 
                     b.Navigation("Carrinho");
 
@@ -531,11 +532,6 @@ namespace APIDevSteamJau.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("APIDevSteamJau.Models.Carrinho", b =>
-                {
-                    b.Navigation("Itens");
                 });
 #pragma warning restore 612, 618
         }
